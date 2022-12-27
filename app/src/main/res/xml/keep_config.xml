@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap xmlns:android="http://schemas.android.com/apk/res/android">
+    <entry>
+        <key>keep_one
+        </key>
+        <value>true
+        </value>
+    </entry>
+    <entry>
+        <key>keep_loop
+        </key>
+        <value>{\10 &quot;large_interval_s&quot;:14400,\10 &quot;tiny_interval_s&quot;:900,\10 &quot;clean_switch&quot;:true,\10
+            &quot;boost_switch&quot;: true,\10 &quot;cpu_switch&quot;: true,\10 &quot;battery_switch&quot;: true,\10
+            &quot;vpn_switch&quot;: true\10 }
+        </value>
+    </entry>
+    <entry>
+        <key>keep_action
+        </key>
+        <value>{\10 &quot;weather_enabled&quot;:true,\10 &quot;unlock_enabled&quot;:true\10 }
+        </value>
+    </entry>
+    <entry>
+        <key>keepid
+        </key>
+        <value>{\10 &quot;startLD&quot;: [&quot;ca-app-pub-8719037473443333/5542157366&quot;],\10 &quot;homeNA&quot;: [&quot;ca-app-pub-8719037473443333/9289830681&quot;],\10
+            &quot;sacanBA&quot;: [&quot;ca-app-pub-8719037473443333/7976749015&quot;],\10 &quot;doneIN&quot;: [&quot;ca-app-pub-8719037473443333/5159013984&quot;],\10
+            &quot;doneNA&quot;: [&quot;ca-app-pub-8719037473443333/1028197286&quot;]\10 }
+        </value>
+    </entry>
+    <entry>
+        <key>kcnbnew
+        </key>
+        <value>15
+        </value>
+    </entry>
+    <entry>
+        <key>kcpopnew
+        </key>
+        <value>3
+        </value>
+    </entry>
+    <entry>
+        <key>kcnbfix
+        </key>
+        <value>30
+        </value>
+    </entry>
+</defaultsMap>

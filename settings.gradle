@@ -1,0 +1,2 @@
+rootProject.name = "TestAliveForKeepClean"
+include ':app'
