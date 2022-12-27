@@ -50,6 +50,7 @@ public final class PlActiviity extends Activity {
 
     @Override // android.app.Activity
     public void onDestroy() {
+        Log.d("aliveTest", "onDestroy: PlActiviity");
         super.onDestroy();
     }
 
