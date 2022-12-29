@@ -181,6 +181,6 @@ public final class MakeService extends Service {
         } catch (Exception e2) {
             e2.printStackTrace();
         }
-        initReceiver();
+        //initReceiver();
     }
 }
