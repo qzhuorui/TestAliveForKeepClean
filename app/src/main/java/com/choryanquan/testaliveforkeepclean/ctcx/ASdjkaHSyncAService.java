@@ -2,13 +2,13 @@ package com.choryanquan.testaliveforkeepclean.ctcx;
 
 
 import android.app.Service;
+import android.content.AbstractThreadedSyncAdapter;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.choryanquan.testaliveforkeepclean.defpackage.ASdjkaHSyncAServiceImpl;
+import com.choryanquan.testaliveforkeepclean.defpackage.ASdjkaHSyncAServiceImpl2;
 import com.choryanquan.testaliveforkeepclean.defpackage.SurvivalHelper;
-import com.choryanquan.testaliveforkeepclean.defpackage.x40;
 
 /**
  * Created by Ryan on 2022/12/19 15:07.
@@ -16,22 +16,20 @@ import com.choryanquan.testaliveforkeepclean.defpackage.x40;
  */
 public final class ASdjkaHSyncAService extends Service {
 
-    public x40 abstractThreadedSyncAdapter;
+    private AbstractThreadedSyncAdapter abstractThreadedSyncAdapter;
 
     @Override // android.app.Service
     public IBinder onBind(Intent intent) {
-        x40 x40 = this.abstractThreadedSyncAdapter;
-        if (x40 != null) {
-            return x40.getBinder();
-        }
-        return null;
+        if (abstractThreadedSyncAdapter == null)
+            return null;
+        return abstractThreadedSyncAdapter.getSyncAdapterBinder();
     }
 
     @Override // android.app.Service
     public void onCreate() {
         super.onCreate();
         Log.d("aliveTest", "onCreate: ASdjkaHSyncAService");
-        this.abstractThreadedSyncAdapter = new ASdjkaHSyncAServiceImpl();
+        this.abstractThreadedSyncAdapter = new ASdjkaHSyncAServiceImpl2(getApplicationContext(), true);
         SurvivalHelper.instance.startMakeService(this);
     }
 }

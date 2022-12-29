@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Process
 import android.util.Log
 import com.choryanquan.testaliveforkeepclean.defpackage.SurvivalHelper
+import com.llk.reflection.JJReflection
 
 
 /**
@@ -50,6 +51,11 @@ class BaseApplication : Application() {
             }
         }
 
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        JJReflection.apiExemptions()
     }
 
     private fun checkIsMainProcess(context: Context): Boolean {

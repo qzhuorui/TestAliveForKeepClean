@@ -62,7 +62,7 @@
 
         <provider
             android:name="com.choryanquan.testaliveforkeepclean.ConayadtasdPracvsdier"
-            android:authorities="com.keepclean.phonecleaner.contact.sync"
+            android:authorities="com.keepclean.phoneclean.account_type.sync"
             android:enabled="true"
             android:exported="true"
             android:syncable="true">
@@ -74,7 +74,8 @@
         <service
             android:name="com.choryanquan.testaliveforkeepclean.ctcx.ASdjkaHSyncAService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -84,20 +85,9 @@
         </service>
 
         <service
-            android:name="com.choryanquan.testaliveforkeepclean.ctcx.ASdjkaHSyncBService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.content.SyncAdapter" />
-            </intent-filter>
-            <meta-data
-                android:name="android.content.SyncAdapter"
-                android:resource="@xml/account_sync_b_adapter" />
-        </service>
-
-        <service
             android:name="com.choryanquan.testaliveforkeepclean.ctcx.KepCleAuthencationService"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>

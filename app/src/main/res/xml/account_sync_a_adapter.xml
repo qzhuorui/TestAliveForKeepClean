@@ -2,7 +2,7 @@
 <sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
     android:accountType="@string/type"
     android:allowParallelSyncs="false"
-    android:contentAuthority="@string/authatr_a"
+    android:contentAuthority="@string/author"
     android:isAlwaysSyncable="true"
     android:supportsUploading="true"
     android:userVisible="false" />

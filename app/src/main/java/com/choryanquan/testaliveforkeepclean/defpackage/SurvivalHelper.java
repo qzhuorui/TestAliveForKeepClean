@@ -48,7 +48,7 @@ public final class SurvivalHelper {
 
             Log.d("aliveTest", "loadSurvival: start");
 
-            AccountUtils.instance.initAccountSync(context);
+            AccountUtils.instance.startAccountSync(context);
             RunningJobService.instance.initJobScheduler(context);
             LaunchWorkder.instance.initWorkRequest(context);
 

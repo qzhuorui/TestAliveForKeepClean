@@ -4,9 +4,14 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.PeriodicSync;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+
+import java.util.List;
 
 /**
  * Created by Ryan on 2022/12/19 10:29.
@@ -16,45 +21,86 @@ public final class AccountUtils {
 
     public static final AccountUtils instance = new AccountUtils();
 
-    public static String authatr_a;
+    public static String author;
     public static String name;
     public static String type;
+    public static Account mAccount;
 
-    public final void initAccountSync(Context context) {
-        Log.d("aliveTest", "initAccountSync: ");
+    static {
+        author = "com.keepclean.phoneclean.account_type.sync";
+        name = "Keep Clean";
+        type = "com.keepclean.phoneclean.account_type";
+        mAccount = new Account(name, type);
+    }
 
-        authatr_a = context.getString(R.string.authatr_a);
-        name = context.getString(R.string.an);
-        type = context.getString(R.string.type);
-        AccountManager accountManager = AccountManager.get(context);
-        Account account = new Account(name, type);
+    private final void initAccountSync(Context context) {
         try {
-            accountManager.addAccountExplicitly(account, null, Bundle.EMPTY);//账户添加
+            Log.d("aliveTest", "initAccountSync: ");
+
+            AccountManager accountManager = AccountManager.get(context);
+
+            Account[] byType = accountManager.getAccountsByType(type);
+
+            if (byType == null || byType.length <= 0) {
+                accountManager.addAccountExplicitly(mAccount, null, Bundle.EMPTY);//账户添加
+                ContentResolver.setIsSyncable(mAccount, author, 1);//设置账户同步开启
+                ContentResolver.setSyncAutomatically(mAccount, author, true);//设置账户自动同步
+                ContentResolver.setMasterSyncAutomatically(true);//自动同步
+            }
+
+            if (!ContentResolver.isSyncPending(mAccount, author)) {
+                requestSync();
+            }
+
+            List<PeriodicSync> syncs = ContentResolver.getPeriodicSyncs(mAccount, author);
+            if (syncs == null || syncs.isEmpty()) {
+                ContentResolver.addPeriodicSync(mAccount, author, Bundle.EMPTY, Build.VERSION.SDK_INT >= 24 ? 900 :
+                        3600);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ContentResolver.setIsSyncable(account, authatr_a, 1);//设置账户同步开启
-        ContentResolver.setSyncAutomatically(account, authatr_a, true);//设置账户自动同步
-        ContentResolver.setMasterSyncAutomatically(true);//自动同步
-        try {
-            String str = authatr_a;
-            Bundle bundle = Bundle.EMPTY;
-            ContentResolver.removePeriodicSync(account, str, bundle);
-            //设置账户自动同步 , 最后一个参数是同步周期
-            ContentResolver.addPeriodicSync(account, authatr_a, bundle, Build.VERSION.SDK_INT >= 24 ? 900 : 3600);
-        } catch (Exception e2) {
-            e2.printStackTrace();
-        }
-        requestSync();
     }
 
     public final void requestSync() {
         try {
             Bundle bundle = new Bundle();
             bundle.putBoolean("force", true);
-            ContentResolver.requestSync(new Account(name, type), authatr_a, bundle);
-        } catch (Throwable th) {
-            th.printStackTrace();
+            bundle.putBoolean("expedited", true);
+            ContentResolver.requestSync(mAccount, author, bundle);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+    public void startAccountSync(Context context) {
+        initAccountSync(context);
+        new Handler(Looper.getMainLooper()).postDelayed(new RequestSyncRunnable(context), 600);
+    }
+
+    private static class RequestSyncRunnable implements Runnable {
+        Context context;
+
+        RequestSyncRunnable(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void run() {
+            try {
+                String name = context.getString(R.string.an);
+                String type = context.getString(R.string.type);
+                String author = context.getString(R.string.author);
+
+                Account account = new Account(name, type);
+                (AccountManager.get(context)).addAccountExplicitly(account, null, null);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("expedited", true);
+                bundle.putBoolean("force", true);
+                ContentResolver.requestSync(account, author, bundle);
+            } catch (Exception e) {
+            }
+        }
+    }
+
 }
