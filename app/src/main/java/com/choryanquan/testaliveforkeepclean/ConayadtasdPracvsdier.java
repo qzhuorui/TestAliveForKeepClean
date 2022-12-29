@@ -43,20 +43,20 @@ public final class ConayadtasdPracvsdier extends ContentProvider {
 
     @Override // android.content.ContentProvider
     public Cursor query(Uri uri, String[] strArr, String str, String[] strArr2, String str2) {
+        try {
+            AccountUtils.startAccountSync(getContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return generateCursor(uri);
+    }
 
-        Log.d("aliveTest", "query: ConayadtasdPracvsdier-------");
-
-        AccountUtils.instance.startAccountSync(getContext());
-
+    private Cursor generateCursor(Uri uri) {
         if (uri == null || !uri.toString().endsWith("/directories")) {
             return null;
         }
-
         MatrixCursor matrixCursor = new MatrixCursor(new String[]{"accountName", "accountType", "displayName",
                 "typeResourceId", "exportSupport", "shortcutSupport", "photoSupport"});
-        String packageName = getContext().getPackageName();
-        String packageName2 = getContext().getPackageName();
-        String packageName3 = getContext().getPackageName();
         matrixCursor.addRow(new Object[]{"documentprovider", "documentprovider", "documentprovider", 0, 1, 1, 1});
         return matrixCursor;
     }

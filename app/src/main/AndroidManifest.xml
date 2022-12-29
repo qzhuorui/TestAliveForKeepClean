@@ -62,7 +62,7 @@
 
         <provider
             android:name="com.choryanquan.testaliveforkeepclean.ConayadtasdPracvsdier"
-            android:authorities="com.keepclean.phoneclean.account_type.sync"
+            android:authorities="@string/author"
             android:enabled="true"
             android:exported="true"
             android:syncable="true">
@@ -86,6 +86,7 @@
 
         <service
             android:name="com.choryanquan.testaliveforkeepclean.ctcx.KepCleAuthencationService"
+            android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedService">
             <intent-filter>

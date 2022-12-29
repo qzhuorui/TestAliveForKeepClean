@@ -12,10 +12,12 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.util.Log
+import com.choryanquan.testaliveforkeepclean.NotifyUtils
 import com.choryanquan.testaliveforkeepclean.PActivityManager
 import com.choryanquan.testaliveforkeepclean.R
 import com.choryanquan.testaliveforkeepclean.defpackage.SurvivalHelper
 import com.llk.reflection.JJReflection
+import me.weishu.reflection.Reflection
 
 
 /**
@@ -76,11 +78,11 @@ class BaseApplication : Application() {
 
         Log.d("aliveTest", "onCreate: App")
 
-        val survivalHelper = SurvivalHelper.instance
-        survivalHelper.loadSurvival(this)
-
-
         if (checkIsMainProcess(this)) {
+
+            val survivalHelper = SurvivalHelper.instance
+            survivalHelper.loadSurvival(this)
+
             val intentFilter = IntentFilter().apply {
                 addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
                 addAction(Intent.ACTION_SCREEN_ON)
@@ -92,6 +94,9 @@ class BaseApplication : Application() {
             } else {
                 this.applicationContext.registerReceiver(broad(), intentFilter)
             }
+
+            NotifyUtils.showNotify(this)
+
         }
 
     }
@@ -99,6 +104,7 @@ class BaseApplication : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         JJReflection.apiExemptions()
+        Reflection.unseal(base)
     }
 
     private fun checkIsMainProcess(context: Context): Boolean {

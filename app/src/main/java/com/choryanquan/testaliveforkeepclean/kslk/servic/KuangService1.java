@@ -21,6 +21,6 @@ public final class KuangService1 extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d("aliveTest", "onCreate: KuangService1");
-        AccountUtils.instance.requestSync();
+        AccountUtils.requestSync();
     }
 }

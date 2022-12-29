@@ -51,5 +51,7 @@ dependencies {
     implementation 'androidx.work:work-runtime:2.7.1'
 
     implementation 'com.github.OBaKai:JJReflection:1.1'
+    implementation 'com.github.tiann:FreeReflection:3.1.0'
+
 
 }

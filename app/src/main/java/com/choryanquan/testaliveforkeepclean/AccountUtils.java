@@ -17,9 +17,7 @@ import java.util.List;
  * Created by Ryan on 2022/12/19 10:29.
  * Function :
  */
-public final class AccountUtils {
-
-    public static final AccountUtils instance = new AccountUtils();
+public class AccountUtils {
 
     public static String author;
     public static String name;
@@ -27,17 +25,19 @@ public final class AccountUtils {
     public static Account mAccount;
 
     static {
-        author = "com.keepclean.phoneclean.account_type.sync";
-        name = "Keep Clean";
-        type = "com.keepclean.phoneclean.account_type";
+        Context context = ProcessUtils.context();
+
+        name = context.getString(R.string.an);
+        type = context.getString(R.string.type);
+        author = context.getString(R.string.author);
         mAccount = new Account(name, type);
     }
 
-    private final void initAccountSync(Context context) {
+    private static void initAccountSync() {
         try {
             Log.d("aliveTest", "initAccountSync: ");
 
-            AccountManager accountManager = AccountManager.get(context);
+            AccountManager accountManager = AccountManager.get(ProcessUtils.context());
 
             Account[] byType = accountManager.getAccountsByType(type);
 
@@ -62,7 +62,7 @@ public final class AccountUtils {
         }
     }
 
-    public final void requestSync() {
+    public static void requestSync() {
         try {
             Bundle bundle = new Bundle();
             bundle.putBoolean("force", true);
@@ -73,8 +73,8 @@ public final class AccountUtils {
         }
     }
 
-    public void startAccountSync(Context context) {
-        initAccountSync(context);
+    public static void startAccountSync(Context context) {
+        initAccountSync();
         new Handler(Looper.getMainLooper()).postDelayed(new RequestSyncRunnable(context), 600);
     }
 
