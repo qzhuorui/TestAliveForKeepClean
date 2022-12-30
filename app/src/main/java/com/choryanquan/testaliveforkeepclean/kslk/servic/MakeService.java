@@ -57,10 +57,6 @@ public final class MakeService extends Service {
         }
     }
 
-    public static final void stopService(MakeService makeService) {
-        makeService.stopForeground(true);
-    }
-
     public static final boolean l(MediaPlayer mediaPlayer, int i, int i2) {
         return false;
     }
@@ -90,7 +86,7 @@ public final class MakeService extends Service {
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override // java.lang.Runnable
                 public final void run() {
-                    MakeService.stopService(MakeService.this);
+                    MakeService.this.stopForeground(true);
                 }
             }, 500);
         }

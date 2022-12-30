@@ -7,11 +7,12 @@ import android.app.job.JobScheduler;
 import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
-import com.choryanquan.testaliveforkeepclean.work.LaunchWorkder;
 import com.choryanquan.testaliveforkeepclean.defpackage.SurvivalHelper;
 import com.choryanquan.testaliveforkeepclean.ml;
+import com.choryanquan.testaliveforkeepclean.work.LaunchWorkder;
 
 /**
  * Created by Ryan on 2022/12/19 10:35.
@@ -38,7 +39,15 @@ public final class RunningJobService extends JobService {
                 Object systemService = context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
                 JobInfo.Builder builder = new JobInfo.Builder(7892,
                         new ComponentName(context.getPackageName(), RunningJobService.class.getName()));
-                builder.setMinimumLatency(3_000L);
+                builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+                if (Build.VERSION.SDK_INT >= 24) {
+                    builder.setMinimumLatency(3_000L);
+                    builder.setOverrideDeadline(3_000L);
+                    builder.setMinimumLatency(3_000L);
+                    builder.setBackoffCriteria(3_000L, JobInfo.BACKOFF_POLICY_LINEAR);
+                } else {
+                    builder.setPeriodic(3_000L);
+                }
                 builder.setPersisted(true);
                 ((JobScheduler) systemService).schedule(builder.build());
             } catch (Exception e) {
