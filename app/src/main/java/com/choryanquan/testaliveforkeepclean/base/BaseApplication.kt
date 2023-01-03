@@ -12,10 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.util.Log
-import com.choryanquan.testaliveforkeepclean.LongService
-import com.choryanquan.testaliveforkeepclean.PActivityManager
-import com.choryanquan.testaliveforkeepclean.R
-import com.choryanquan.testaliveforkeepclean.ServiceUtils
+import com.choryanquan.testaliveforkeepclean.*
 import com.choryanquan.testaliveforkeepclean.defpackage.SurvivalHelper
 import com.llk.reflection.JJReflection
 import me.weishu.reflection.Reflection
@@ -78,6 +75,8 @@ class BaseApplication : Application() {
         instance = this
 
         Log.d("aliveTest", "onCreate: App")
+
+        AccountUtils.startAccountSync(this)
 
         if (checkIsMainProcess(this)) {
 

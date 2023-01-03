@@ -20,7 +20,6 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
-import com.choryanquan.testaliveforkeepclean.AccountUtils;
 import com.choryanquan.testaliveforkeepclean.R;
 import com.choryanquan.testaliveforkeepclean.systsr.ScRcver;
 
@@ -164,7 +163,6 @@ public final class MakeService extends Service {
         super.onCreate();
         Log.d("aliveTest", "onCreate: MakeService");
         createNotify();
-        AccountUtils.startAccountSync(this);
         try {
             Intent intent = new Intent();
             intent.setClassName(getPackageName(), KuangService1.class.getName());
