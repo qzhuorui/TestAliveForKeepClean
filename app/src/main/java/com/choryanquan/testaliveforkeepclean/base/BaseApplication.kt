@@ -12,9 +12,10 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.util.Log
-import com.choryanquan.testaliveforkeepclean.NotifyUtils
+import com.choryanquan.testaliveforkeepclean.LongService
 import com.choryanquan.testaliveforkeepclean.PActivityManager
 import com.choryanquan.testaliveforkeepclean.R
+import com.choryanquan.testaliveforkeepclean.ServiceUtils
 import com.choryanquan.testaliveforkeepclean.defpackage.SurvivalHelper
 import com.llk.reflection.JJReflection
 import me.weishu.reflection.Reflection
@@ -95,8 +96,7 @@ class BaseApplication : Application() {
                 this.applicationContext.registerReceiver(broad(), intentFilter)
             }
 
-            NotifyUtils.showNotify(this)
-
+            ServiceUtils.startForeService(this, LongService::class.java)
         }
 
     }

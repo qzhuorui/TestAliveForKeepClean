@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.choryanquan.testaliveforkeepclean.base.MainActivity
 
 /**
@@ -20,9 +19,9 @@ import com.choryanquan.testaliveforkeepclean.base.MainActivity
 object NotifyUtils {
 
 
-    fun showNotify(context: Context) {
+    fun createNotify(context: Context): Notification? {
         try {
-            
+
             val pendingIntent = PendingIntent.getActivity(
                 context,
                 "NotifyUtils".hashCode(),
@@ -51,9 +50,12 @@ object NotifyUtils {
                         R.drawable.ic_logo
                     )
                 )
-                .setCustomBigContentView(notifyLayout)
-                .setGroupSummary(false)
                 .setContent(notifyLayout)
+                .setCustomContentView(notifyLayout)
+                .setCustomBigContentView(notifyLayout)
+                .setCustomHeadsUpContentView(notifyLayout)
+                .setWhen(System.currentTimeMillis())
+                .setGroupSummary(false)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setAutoCancel(false)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -62,9 +64,12 @@ object NotifyUtils {
 
             toolNotify.flags = toolNotify.flags or Notification.FLAG_NO_CLEAR
 
-            NotificationManagerCompat.from(context).notify("Test Tools", 111111, toolNotify)
+            //NotificationManagerCompat.from(context).notify("Test Tools", 111111, toolNotify)
+
+            return toolNotify
 
         } catch (e: Exception) {
+            return null
         }
     }
 
@@ -76,12 +81,13 @@ object NotifyUtils {
                     NotificationChannel(
                         "Test Tools",
                         "Test Tools",
-                        NotificationManager.IMPORTANCE_MIN
+                        3
                     ).apply {
                         description = "Test Tools"
                     }
                 testsdad.enableLights(false)
                 testsdad.setShowBadge(false)
+                testsdad.lockscreenVisibility = 1
                 testsdad.enableVibration(false)
                 testsdad.setSound(null, null)
                 val dsadada =

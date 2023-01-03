@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">TestAliveForKeepClean</string>
 
-    <string name="an">Keep Clean</string>
+    <string name="an">KeepCleanTest</string>
 
-    <string name="author">com.keepclean.phoneclean.account_type.sync</string>
+    <string name="author">com.choryanquan.testaliveforkeepclean.account_type.sync</string>
 
-    <string name="type">com.keepclean.phoneclean.account_type</string>
+    <string name="type">com.choryanquan.testaliveforkeepclean.account_type</string>
 
 </resources>
